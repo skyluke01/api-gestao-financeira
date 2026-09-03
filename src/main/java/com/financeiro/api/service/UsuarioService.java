@@ -19,7 +19,7 @@ public class UsuarioService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Usuario salvarUsuario(Usuario usuario) {
+    public Usuario cadastrarUsuario(Usuario usuario) {
         // Criptografando a Senha antes de mandar para o banco de dados
         String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
         usuario.setSenha(senhaCriptografada);
@@ -43,5 +43,10 @@ public class UsuarioService {
         }
 
         return usuario;
+    }
+
+    public Usuario buscarPorId(Long id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com o ID: " + id));
     }
 }
